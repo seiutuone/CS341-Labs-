@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JUnitDemo</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">UserManager.java</span></div><h1>UserManager.java</h1><pre class="source lang-java linenums">import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+<span class="fc" id="L5">public class UserManager {</span>
+
+<span class="fc" id="L7">    Map&lt;String, User&gt; userList = new ConcurrentHashMap&lt;String, User&gt;();</span>
+
+    //Add a user
+    public void addUser(String firstName, String lastName, String phoneNumber) {
+<span class="fc" id="L11">        User user = new User(firstName, lastName, phoneNumber);</span>
+<span class="fc" id="L12">        validateUser(user);</span>
+<span class="fc" id="L13">        checkIfUserExists(user);</span>
+<span class="fc" id="L14">        userList.put(generateKey(user), user);</span>
+<span class="fc" id="L15">    }</span>
+
+    //Get User listings
+    public Collection&lt;User&gt; getAllUsers() {
+<span class="fc" id="L19">        return userList.values();</span>
+    }
+
+    //Validate the users
+    private void validateUser(User user) {
+<span class="fc" id="L24">        user.validateFirstName();</span>
+<span class="fc" id="L25">        user.validateLastName();</span>
+<span class="fc" id="L26">        user.validatePhoneNumber();</span>
+<span class="fc" id="L27">    }</span>
+
+    //Check if user already exists hashmap
+    private void checkIfUserExists(User user) {
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (userList.containsKey(generateKey(user)))</span>
+<span class="nc" id="L32">            throw new RuntimeException(&quot;User already Exists!&quot;);</span>
+<span class="fc" id="L33">    }</span>
+
+    //Key generation function
+    private String generateKey(User user) {
+<span class="fc" id="L37">        return String.format(&quot;%s-%s&quot;, user.getFirstName(), user.getLastName());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
